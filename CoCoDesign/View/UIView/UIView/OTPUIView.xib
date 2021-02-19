@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="OTPUIView" customModule="CoCoDesign" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VHm-Wb-F5V">
+                    <rect key="frame" x="10" y="10" width="355" height="80"/>
+                    <subviews>
+                        <textField opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uvA-2U-Qua">
+                            <rect key="frame" x="0.0" y="0.0" width="51" height="80"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DU8-C6-oYz">
+                            <rect key="frame" x="61" y="0.0" width="50.5" height="80"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltL-dk-qlQ">
+                            <rect key="frame" x="121.5" y="0.0" width="51" height="80"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pZf-yP-wq4">
+                            <rect key="frame" x="182.5" y="0.0" width="51" height="80"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OTu-Gr-vYx">
+                            <rect key="frame" x="243.5" y="0.0" width="50.5" height="80"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C4Z-zt-tqN">
+                            <rect key="frame" x="304" y="0.0" width="51" height="80"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="VHm-Wb-F5V" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="Qpc-mb-0fx"/>
+                <constraint firstItem="VHm-Wb-F5V" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="YT6-aJ-GDM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VHm-Wb-F5V" secondAttribute="trailing" constant="10" id="hRD-Fi-1zw"/>
+                <constraint firstAttribute="bottom" secondItem="VHm-Wb-F5V" secondAttribute="bottom" constant="10" id="zE0-mH-4p9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="inputOTPTextFiels" destination="uvA-2U-Qua" collectionClass="NSMutableArray" id="Efh-tc-jLk"/>
+                <outletCollection property="inputOTPTextFiels" destination="DU8-C6-oYz" collectionClass="NSMutableArray" id="9kA-34-gCJ"/>
+                <outletCollection property="inputOTPTextFiels" destination="ltL-dk-qlQ" collectionClass="NSMutableArray" id="G06-yD-ekx"/>
+                <outletCollection property="inputOTPTextFiels" destination="pZf-yP-wq4" collectionClass="NSMutableArray" id="g8o-Gh-G7m"/>
+                <outletCollection property="inputOTPTextFiels" destination="OTu-Gr-vYx" collectionClass="NSMutableArray" id="Daq-sU-pIV"/>
+                <outletCollection property="inputOTPTextFiels" destination="C4Z-zt-tqN" collectionClass="NSMutableArray" id="UAF-PQ-WPD"/>
+            </connections>
+            <point key="canvasLocation" x="65.94202898550725" y="75.669642857142847"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
