@@ -1,2 +1,2 @@
-# CocoAppDesign
+# CocoDesign
 training
