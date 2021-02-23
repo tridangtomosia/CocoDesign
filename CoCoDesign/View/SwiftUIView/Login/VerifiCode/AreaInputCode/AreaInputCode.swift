@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AreaInputCode: View {
-    @ObservedObject var inputCode: CodeInputObserver
+//    @ObservedObject var inputCode: CodeInputObserver
     @State var timeRemaining = 90
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var text = ""
@@ -42,6 +42,6 @@ struct AreaInputCode: View {
 
 struct AreaInputCode_Previews: PreviewProvider {
     static var previews: some View {
-        AreaInputCode(inputCode: CodeInputObserver())
+        AreaInputCode()
     }
 }
