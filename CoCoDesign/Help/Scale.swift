@@ -9,5 +9,5 @@ import SwiftUI
 
 struct ConfigurationScale {
     static let scaleW = UIScreen.main.bounds.width / 375
-    static let scaleH = UIScreen.main.bounds.height / 812
+    static let scaleH = UIScreen.main.bounds.height / 814
 }

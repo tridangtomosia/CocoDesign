@@ -10,11 +10,11 @@ import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-//    var policy = PolicyModel()
+    var policy = PolicyModel()
+    var phoneViewModel = PhoneViewModel()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-//        let contentView = ContentView().environmentObject(policy)
-        let contentView = ContentView()
+        let contentView = ContentView().environmentObject(policy).environmentObject(phoneViewModel)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)

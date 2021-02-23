@@ -18,8 +18,9 @@ struct LinkColoredText: View {
     let text: String
     let components: [Component]
     let linkName: String
+    let font: Font
 
-    init(text: String, links: [NSTextCheckingResult], linkName: String) {
+    init(text: String, links: [NSTextCheckingResult], linkName: String, font: Font) {
         self.text = text
         let nsText = text as NSString
 
@@ -39,6 +40,7 @@ struct LinkColoredText: View {
 
         self.components = components
         self.linkName = linkName
+        self.font = font
     }
 
     var body: some View {
@@ -46,8 +48,12 @@ struct LinkColoredText: View {
             switch component {
             case let .text(text):
                 return Text(verbatim: text)
+                    .font(font)
+                    .foregroundColor(Color.AppColor.grayTextColor)
             case .link:
                 return Text(verbatim: linkName)
+                    .font(font)
+                    .underline()
                     .foregroundColor(.accentColor)
             }
         }.reduce(Text(""), +)
@@ -59,11 +65,13 @@ struct LinkedText: View {
     let text: String
     let links: [NSTextCheckingResult]
     let linkName: String
+    let font: Font
 
-    init(_ text: String, linkName: String) {
+    init(_ text: String, linkName: String, font: Font) {
         self.linkName = linkName
         self.text = text
         let nsText = text as NSString
+        self.font = font
 
         // find the ranges of the string that have URLs
         let wholeString = NSRange(location: 0, length: nsText.length)
@@ -71,7 +79,7 @@ struct LinkedText: View {
     }
 
     var body: some View {
-        LinkColoredText(text: text, links: links, linkName: linkName)
+        LinkColoredText(text: text, links: links, linkName: linkName, font: font)
             .font(.body) // enforce here because the link tapping won't be right if it's different
             .overlay(LinkTapOverlay(text: text, links: links))
     }

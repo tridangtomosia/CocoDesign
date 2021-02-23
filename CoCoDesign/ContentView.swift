@@ -9,9 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var policy: PolicyModel
-    @Environment(.policy) var policyModel: PolicyModel
     @State var name = ""
-    
+
     var body: some View {
         NavigationView {
             VStack {

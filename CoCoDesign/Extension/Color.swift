@@ -4,7 +4,7 @@
 //
 //  Created by apple on 2/2/21.
 //
-
+import UIKit
 import SwiftUI
 
 extension Color {
@@ -32,16 +32,13 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
-}
-
-extension Int {
-    var scaleW: CGFloat {
-        return CGFloat(self) * ConfigurationScale.scaleW
-    }
     
-    var scaleH: CGFloat {
-        return CGFloat(self) * ConfigurationScale.scaleH
+    struct AppColor {
+        static let appColor = Color(hex: "#34ADB1")
+        static let grayBorderColor = Color(hex: "#D0DBEA")
+        static let textPlaceHolder = Color(hex: "#E1E1E1")
+        static let grayTextColor = Color(hex: "#9FA5C0")
+        static let blueLinkColor = Color(hex: "#005CF5")
+        static let blackColor = Color(hex: "#2E3E5C")
     }
 }
-
-

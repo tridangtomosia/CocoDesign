@@ -7,6 +7,8 @@ target 'CoCoDesign' do
 
   # Pods for CoCoDesign
 
+     #Service
+  pod 'ReachabilitySwift'
     #Network
   pod 'Alamofire', '5.2.1'
   #Notification

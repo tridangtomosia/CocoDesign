@@ -38,7 +38,8 @@ extension DataRequest {
                                         error: nil,
                                         timimg: timing)
                     case 401:
-                        NotificationCenter.default.post(name: .unauthentication, object: nil, userInfo: nil)
+                        break
+//                        NotificationCenter.default.post(name: .unauthentication, object: nil, userInfo: nil)
                     default:
                         var apiError = APIError.json
                         if let json = object as? JSObject,

@@ -3,9 +3,9 @@
  */
 
 import Alamofire
-//import Firebase
+import Firebase
 import Foundation
-//import Reachability
+import Reachability
 
 typealias JSObject = [String: Any]
 typealias JSArray = [JSObject]
@@ -192,7 +192,8 @@ class APIManager {
                             }
                         }
                     case 401:
-                        NotificationCenter.default.post(name: .unauthentication, object: nil, userInfo: nil)
+                        break
+//                        NotificationCenter.default.post(name: .unauthentication, object: nil, userInfo: nil)
                     default:
                         var apiError = APIError.json
                         if let json = object as? JSObject,
@@ -277,6 +278,16 @@ extension URLSession {
                 task.cancel()
             }
             completion?()
+        }
+    }
+}
+
+extension NSLock {
+    func sync( block: () -> Void) {
+        let locked = self.try()
+        block()
+        if locked {
+            unlock()
         }
     }
 }

@@ -18,11 +18,16 @@ class Entries<T: Codable>: Codable {
 }
 
 class APIResponse<T: Codable>: Codable {
-    let entries: Entries<T>?
-    let errors: APIResponseError?
-
-    init(status: Bool?, entries: Entries<T>?, errors: APIResponseError?) {
-        self.entries = entries
-        self.errors = errors
+//    let entries: Entries<T>?
+    let data: T?
+    let meta: APIResponseError?
+//    let errors: APIResponseError?
+    init(status: Bool?, data: T?, meta: APIResponseError?) {
+        self.data = data
+        self.meta = meta
     }
+//    init(status: Bool?, entries: Entries<T>?, errors: APIResponseError?) {
+//        self.entries = entries
+//        self.errors = errors
+//    }
 }

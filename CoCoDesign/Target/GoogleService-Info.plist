@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>486263663840-2b5fk3h1tdsu4f2hfna6m4oovp844d4l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.486263663840-2b5fk3h1tdsu4f2hfna6m4oovp844d4l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDt5Q777rvEHi_xKA17Dj4cM3Pun_2O484</string>
+	<key>GCM_SENDER_ID</key>
+	<string>486263663840</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>tomosia.CoCoDesign</string>
+	<key>PROJECT_ID</key>
+	<string>cocodesign-81c87</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cocodesign-81c87.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:486263663840:ios:fe5bcc8717eaf79ee1b485</string>
+</dict>
+</plist>

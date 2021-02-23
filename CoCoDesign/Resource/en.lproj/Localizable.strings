@@ -1,0 +1,29 @@
+/* 
+  Localizable.strings
+  CoCoDesign
+
+  Created by apple on 2/22/21.
+  
+*/
+
+"SKIP" = "Skip";
+"NEXT" = "Next";
+"SIGN_UP" = "Sign Up";
+"DONE" = "Done";
+"OK" = "Ok";
+"SELECT_PHOTO_LIBRARY" = "Select Photo Library";
+"TAKE_A_PHOTO" = "Take a Photo";
+"CANCEL" = "Cancel";
+"GO_TO_SETTING" = "Go To Setting";
+"INVITE" = "Invite";
+"BLOCK" = "Block";
+"DELETE" = "Delete";
+"REJECT" = "Reject";
+"APPROVAL" = "Approval";
+"SEND" = "Send";
+"RETURN" ="Return";
+"AGREE" = "Agree";
+"SEARCH" = "Search";
+
+//App Text
+"Place" = "Place";

@@ -2011,7 +2011,7 @@ let flagEmoji: [[String: String]] = [
 let areaCodes: [RegionFlag] = {
     var areaCodes: [RegionFlag] = []
     flagEmoji.forEach { dic in
-        areaCodes.append( RegionFlag(regionName: dic["name"] ?? "", emoji: dic["emoji"] ?? "", dialCode: dic["dialCode"] ?? "" ) )
+        areaCodes.append(RegionFlag(regionName: dic["name"] ?? "", emoji: dic["emoji"] ?? "", dialCode: dic["dialCode"] ?? ""))
     }
     return areaCodes
 }()

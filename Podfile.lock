@@ -363,6 +363,7 @@ PODS:
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.11)
   - Protobuf (3.14.0)
+  - ReachabilitySwift (5.0.0)
 
 DEPENDENCIES:
   - Alamofire (= 5.2.1)
@@ -375,6 +376,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - FirebaseFirestoreSwift
   - FirebaseMessaging
+  - ReachabilitySwift
 
 SPEC REPOS:
   trunk:
@@ -404,6 +406,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - ReachabilitySwift
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -432,7 +435,8 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Protobuf: 0cde852566359049847168e51bd1c690e0f70056
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
 
-PODFILE CHECKSUM: 739c966286e165ef57838b353c87ffe88a4a0ed4
+PODFILE CHECKSUM: 00b35795b409a1018e4dadd7624959ef4bb0bf28
 
 COCOAPODS: 1.9.0

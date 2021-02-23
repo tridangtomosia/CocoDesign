@@ -1,0 +1,30 @@
+/* 
+  Localizable.strings
+  CoCoDesign
+
+  Created by apple on 2/22/21.
+  
+*/
+
+"SKIP" = "Bỏ Qua";
+"NEXT" = "Tiếp Tục";
+"SIGN_UP" = "Đăng Nhập";
+"DONE" = "Xong";
+"OK" = "OK";
+"SELECT_PHOTO_LIBRARY" = "Chọn Thư Viện Ảnh";
+"TAKE_A_PHOTO" = "Chụp Ảnh";
+"CANCEL" = "Từ Chối";
+"GO_TO_SETTING" = "Đến Cài Đặt";
+"INVITE" = "Mời";
+"BLOCK" = "Chặn";
+"DELETE" = "Xoá";
+"REJECT" = "Từ Chối";
+"APPROVAL" = "Chấp Thuận";
+"SEND" = "Gửi";
+"RETURN" = "Trả Về";
+"AGREE" = "Đồng Ý";
+"SEARCH" = "Tìm Kiếm";
+
+
+// AppText
+"Place" = "Place";
