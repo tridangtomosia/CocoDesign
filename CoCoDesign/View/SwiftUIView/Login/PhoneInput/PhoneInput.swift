@@ -23,74 +23,88 @@ struct PhoneInput: View {
 
     var body: some View {
         VStack {
-            VStack(alignment: .leading, spacing: 15, content: {
-                Text(Configuration.InputPhoneLabel)
-                    .font(.appFont(interFont: .bold, size: 18))
-                HStack {
-                    Button(action: {
-                        isPresentPicker.toggle()
-                    }, label: {
-                        HStack(alignment: .center, spacing: 0, content: {
-                            Text(regionFlag.emoji)
-                                .font(.system(size: 20))
-                            Text(regionFlag.dialCode)
-                                .padding(.all, 0)
-                                .font(.appFont(interFont: .bold, size: 13))
-                                .foregroundColor(Color.AppColor.blackColor)
-                        })
-                        .padding(.leading, -10)
-                    })
-                                        
-                    Rectangle()
-                        .frame(width: 1, height: 45.scaleH)
-                        .foregroundColor(Color.AppColor.grayBorderColor)
-                    
-                    ZStack(alignment: .leading) {
-                        if phoneNumber.phoneNumber.isEmpty {
-                            Text(Configuration.placeHolderDefaultPhone)
-                                .font(.appFont(interFont: .bold, size: 13))
-                                .foregroundColor(Color.AppColor.textPlaceHolder)
-                                .padding(.leading, 10)
-                        }
-                        TextField("", text: $phoneNumber.phoneNumber)
-                            .padding(.leading, 10)
-                            .foregroundColor(Color.AppColor.blackColor)
-                    }
-                }
-                .padding(.leading, 24)
-                .overlay(RoundedRectangle(cornerRadius: 45.scaleH)
-                    .stroke(Color.AppColor.grayBorderColor, lineWidth: 1))
-                Spacer()
-            })
+            inputView()
                 .padding(.all, 24)
-
-            VStack(alignment: .leading, spacing: 12.scaleH, content: {
-                LinkedText(Configuration.linkPolicy, linkName: Configuration.linkNamePolicy, font: .appFont(interFont: .regular, size: 13))
-                    .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 14))
-                NavigationLink(
-                    destination: VerifiCode(phoneNumber: phoneNumber.phoneNumber),
-                    label: {
-                        Text(Strings.Action.next)
-                            .font(.appFont(interFont: .semiBold, size: 15))
-                            .foregroundColor(.white)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .frame(height: 48.scaleH)
-                            .background(phoneNumber.isReadyToPush ?
-                                Color.AppColor.appColor : Color.AppColor.textPlaceHolder)
-                            .clipShape(RoundedRectangle(cornerRadius: 48.scaleH))
-                    }
-                )
-                .allowsHitTesting(phoneNumber.isReadyToPush)
-                .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-            })
+            actionView()
         }
         .padding(.bottom, 12.scaleH)
         .sheet(isPresented: $isPresentPicker, content: {
             pickerPlaceView()
         })
     }
+    
+    private func actionView() -> some View {
+        return VStack(alignment: .leading, spacing: 12.scaleH, content: {
+            LinkedText(Configuration.linkPolicy, linkName: Configuration.linkNamePolicy, font: .appFont(interFont: .regular, size: 13))
+                .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 14))
+            NavigationLink(
+                destination: VerifiCode(dialCode: regionFlag.dialCode, phone: phoneNumber),
+                label: {
+                    Text(Strings.Action.next)
+                        .font(.appFont(interFont: .semiBold, size: 15))
+                        .foregroundColor(.white)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 48.scaleH)
+                        .background(phoneNumber.isReadyToPush ?
+                            Color.AppColor.appColor : Color.AppColor.textPlaceHolder)
+                        .clipShape(RoundedRectangle(cornerRadius: 48.scaleH))
+                }
+            )
+            .allowsHitTesting(phoneNumber.isReadyToPush)
+            .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+        })
+    }
+    
+    private func inputView() -> some View {
+        return VStack(alignment: .leading, spacing: 15, content: {
+            Text(Configuration.InputPhoneLabel)
+                .font(.appFont(interFont: .bold, size: 18))
+            HStack {
+                showPlaceView()
+                Rectangle()
+                    .frame(width: 1, height: 45.scaleH)
+                    .foregroundColor(Color.AppColor.grayBorderColor)
+                inputPhoneView()
+            }
+            .padding(.leading, 24)
+            .overlay(RoundedRectangle(cornerRadius: 45.scaleH)
+                .stroke(Color.AppColor.grayBorderColor, lineWidth: 1))
+            Spacer()
+        })
+    }
+    
+    private func showPlaceView() -> some View {
+        Button(action: {
+            isPresentPicker.toggle()
+        }, label: {
+            HStack(alignment: .center, spacing: 0, content: {
+                Text(regionFlag.emoji)
+                    .font(.system(size: 20))
+                Text(regionFlag.dialCode)
+                    .padding(.all, 0)
+                    .font(.appFont(interFont: .bold, size: 13))
+                    .foregroundColor(Color.AppColor.blackColor)
+            })
+                .padding(.leading, -10)
+        })
+    }
 
-    func pickerPlaceView() -> some View {
+    private func inputPhoneView() -> some View {
+        return ZStack(alignment: .leading) {
+            if phoneNumber.phoneNumber.isEmpty {
+                Text(Configuration.placeHolderDefaultPhone)
+                    .font(.appFont(interFont: .bold, size: 13))
+                    .foregroundColor(Color.AppColor.textPlaceHolder)
+                    .padding(.leading, 10)
+            }
+            TextField("", text: $phoneNumber.phoneNumber)
+                .font(.appFont(interFont: .bold, size: 13))
+                .padding(.leading, 10)
+                .foregroundColor(Color.AppColor.blackColor)
+        }
+    }
+
+    private func pickerPlaceView() -> some View {
         return VStack {
             HStack(alignment: .center, spacing: nil, content: {
                 HStack {

@@ -4,65 +4,65 @@
 
 import Foundation
 
-enum APIError: Error, Equatable {
-    case json
-    case network
-    case unauthorization
-    case notFound(String)
-    case custom(String, Int?)
-    case list([String], Int)
+//enum APIError: Error, Equatable {
+//    case json
+//    case network
+//    case unauthorization
+//    case notFound(String)
+//    case custom(String, Int?)
+//    case list([String], Int)
+//
+//    var localizedDescription: String {
+//        switch self {
+//        case .json:
+//            return "エラー形式JSON"
+//        case .network:
+//            return "あなたは接続を失いました。"
+//        case .unauthorization:
+//            return "無許可"
+//        case let .notFound(message):
+//            return message
+//        case let .custom(message, _):
+//            return message
+//        case let .list(messsages, _):
+//            return messsages.joined(separator: ",")
+//        }
+//    }
+//
+//    var code: Int? {
+//        switch self {
+//        case .json:
+//            return 998
+//        case .network:
+//            return 997
+//        case let .custom(_, statusCode):
+//            return statusCode
+//        case .unauthorization:
+//            return 401
+//        case let .list(_, statusCode):
+//            return statusCode
+//        case .notFound(_):
+//            return 996
+//        }
+//    }
+//}
 
-    var localizedDescription: String {
-        switch self {
-        case .json:
-            return "エラー形式JSON"
-        case .network:
-            return "あなたは接続を失いました。"
-        case .unauthorization:
-            return "無許可"
-        case let .notFound(message):
-            return message
-        case let .custom(message, _):
-            return message
-        case let .list(messsages, _):
-            return messsages.joined(separator: ",")
-        }
-    }
-    
-    var code: Int? {
-        switch self {
-        case .json:
-            return 998
-        case .network:
-            return 997
-        case let .custom(_, statusCode):
-            return statusCode
-        case .unauthorization:
-            return 401
-        case let .list(_, statusCode):
-            return statusCode
-        case .notFound(_):
-            return 996
-        }
-    }
-}
-
-func == (lhs: APIError, rhs: APIError) -> Bool {
-    switch (lhs, rhs) {
-    case (.json, .json):
-        return true
-    case (.network, .network):
-        return true
-    case (.unauthorization, .unauthorization):
-        return true
-    case (.notFound, .notFound):
-        return true
-    case (.custom, .custom):
-        return true
-    default:
-        return false
-    }
-}
+//func == (lhs: APIError, rhs: APIError) -> Bool {
+//    switch (lhs, rhs) {
+//    case (.json, .json):
+//        return true
+//    case (.network, .network):
+//        return true
+//    case (.unauthorization, .unauthorization):
+//        return true
+//    case (.notFound, .notFound):
+//        return true
+//    case (.custom, .custom):
+//        return true
+//    default:
+//        return false
+//    }
+//}
 
 extension Error {
     var description: String {
@@ -329,7 +329,7 @@ enum HTTPStatusCode: Int, CustomStringConvertible {
         return rawValue
     }
 
-    var error: APIError {
-        return APIError.custom(description, nil)
-    }
+//    var error: APIError {
+//        return APIError.custom(description, nil)
+//    }
 }

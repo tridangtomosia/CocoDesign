@@ -19,6 +19,31 @@ enum InterFont {
     case thin
 }
 
+extension UIFont {
+    static func appFont(interFont: InterFont, size: CGFloat) -> UIFont {
+        switch interFont {
+        case .black:
+            return UIFont(name: "Inter-Black", size: size) ?? UIFont()
+        case .bold:
+            return UIFont(name: "Inter-Bold", size: size) ?? UIFont()
+        case .extraBold:
+            return UIFont(name: "Inter-ExtraBold", size: size) ?? UIFont()
+        case .extraLight:
+            return UIFont(name: "Inter-Inter-ExtraLight", size: size) ?? UIFont()
+        case .light:
+            return UIFont(name: "Inter-Light", size: size) ?? UIFont()
+        case .medium:
+            return UIFont(name: "Inter-Medium", size: size) ?? UIFont()
+        case .regular:
+            return UIFont(name: "Inter-Regular", size: size) ?? UIFont()
+        case .semiBold:
+            return UIFont(name: "Inter-SemiBold", size: size) ?? UIFont()
+        case .thin:
+            return UIFont(name: "Inter-Thin", size: size) ?? UIFont()
+        }
+    }
+}
+
 extension Font {
     static func appFont(interFont: InterFont, size: CGFloat) -> Font {
         switch interFont {

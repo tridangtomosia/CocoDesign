@@ -27,6 +27,7 @@ struct Strings {
         static let retrun = "RETURN".localized()
         static let agree = "AGREE".localized()
         static let search = "Search".localized()
+        static let ReSendOTP = "RESENDOTP".localized()
     }
     
     // note

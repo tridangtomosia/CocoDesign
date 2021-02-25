@@ -24,7 +24,7 @@
 "RETURN" = "Trả Về";
 "AGREE" = "Đồng Ý";
 "SEARCH" = "Tìm Kiếm";
-
+"RESENDOTP" = "Gửi lại mã OTP";
 
 // AppText
 "Place" = "Place";

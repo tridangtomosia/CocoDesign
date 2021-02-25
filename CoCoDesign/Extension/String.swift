@@ -313,39 +313,6 @@ extension String {
         return transformToHTML().string
     }
 
-    func transformToDict() -> JSObject? {
-        if let data = self.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? JSObject
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
-    }
-}
-
-extension String {
-    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
-        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect,
-                                       options: .usesLineFragmentOrigin,
-                                       attributes: [.font: font],
-                                       context: nil)
-
-        return ceil(boundingBox.height)
-    }
-
-    func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
-        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let boundingBox = self.boundingRect(with: constraintRect,
-                                       options: .usesLineFragmentOrigin,
-                                       attributes: [.font: font],
-                                       context: nil)
-
-        return ceil(boundingBox.width)
-    }
-
     func toDictionary() -> [String: String] {
         let spilits = split(separator: "&")
         return spilits.map { String($0) }.reduce([:]) { (result, string) -> [String: String] in
@@ -361,23 +328,26 @@ extension String {
     var path: String? {
         return Bundle.main.path(forResource: self, ofType: nil)
     }
+
+    func attrsString() -> NSMutableAttributedString {
+        let attributed = NSMutableAttributedString(string: self)
+        return attributed
+    }
 }
 
-extension URL {
-    var request: URLRequest {
-        return URLRequest(url: self)
+extension String {
+    func convertUnicode() -> String {
+        let converted = unicodeScalars
+            .map({ 127397 + $0.value })
+            .compactMap(UnicodeScalar.init)
+            .map(String.init)
+            .joined()
+        return converted
     }
+}
 
-    func open() {
-//        if #available(iOS 10.0, *) {
-//            kApplication.open(self, options: [:], completionHandler: nil)
-//        } else {
-//            kApplication.openURL(self)
-//        }
-    }
-
-    func valueOf(_ queryParamaterName: String) -> String? {
-        guard let url = URLComponents(string: self.absoluteString) else { return nil }
-        return url.queryItems?.first(where: { $0.name == queryParamaterName })?.value
+extension String {
+    static func getTMDBMovieImage(path: String) -> URL? {
+        return URL(string: "https://image.tmdb.org/t/p/original" + path)
     }
 }

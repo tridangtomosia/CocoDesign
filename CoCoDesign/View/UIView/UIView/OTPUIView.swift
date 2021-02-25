@@ -9,19 +9,20 @@ import SwiftUI
 import UIKit
 class OTPUIView: UIView {
     @IBOutlet var inputOTPTextFiels: [UITextField]!
+    var codeInputCompleted: ((String)->())?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         inputOTPTextFiels.forEach { textField in
+            textField.layer.borderWidth = 1
+            textField.layer.cornerRadius = textField.bounds.height/10
+            textField.clipsToBounds = true
+            textField.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
             textField.delegate = self
             textField.textAlignment = .center
             textField.placeholder = "0"
-            textField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+            textField.font = .appFont(interFont: .bold, size: 16)
         }
-    }
-
-    @objc func textFieldDidChange(textField: UITextField) {
-        
     }
 }
 
@@ -30,8 +31,11 @@ extension OTPUIView: UITextFieldDelegate {
         if string == "" {
             if textField.tag > 10 {
                 (viewWithTag(textField.tag - 1) as? UITextField)?.becomeFirstResponder()
+                (viewWithTag(textField.tag - 1) as? UITextField)?.layer.borderColor = Color.AppColor.appColor.cgColor
             }
             textField.text = ""
+            textField.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
+            checkStateCompleted()
             return false
         }
 
@@ -49,12 +53,19 @@ extension OTPUIView: UITextFieldDelegate {
             return false
         }
     }
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textField.text = ""
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.layer.borderColor = Color.AppColor.appColor.cgColor
+        return true
     }
 
     func nextCursorTextField(textField: UITextField) {
+        textField.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
         switch textField.tag {
         case 10:
             inputOTPTextFiels[1].becomeFirstResponder()
@@ -67,19 +78,40 @@ extension OTPUIView: UITextFieldDelegate {
         case 14:
             inputOTPTextFiels[5].becomeFirstResponder()
         default:
+            textField.layer.borderColor = Color.AppColor.appColor.cgColor
             break
         }
     }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        checkStateCompleted()
+    }
+    
+    func checkStateCompleted() {
+        var codeInput = ""
+        for i in 10...15 {
+            if let character = (viewWithTag(i) as? UITextField)?.text {
+                codeInput.append(character)
+            }
+        }
+        codeInputCompleted?(codeInput)
+    }
 }
 
-struct OTP2UIView: UIViewRepresentable {
-    @Binding var text: String
+struct OTPView: UIViewRepresentable {
+    @Binding var verifiCode: String
+    @Binding var isInputFull: Bool
     func makeUIView(context: Context) -> some OTPUIView {
         let view = Bundle.main.loadNibNamed("OTPUIView", owner: nil, options: nil)?[0] as! OTPUIView
+        view.codeInputCompleted = { code in
+            verifiCode = code
+            isInputFull = verifiCode.count == 6
+        }
         return view
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
+        
     }
 
     func makeCoordinator() -> OPTCoordinator {
@@ -87,8 +119,8 @@ struct OTP2UIView: UIViewRepresentable {
     }
 
     class OPTCoordinator: NSObject, UITextFieldDelegate {
-        var view: OTP2UIView
-        init(_ view: OTP2UIView) {
+        var view: OTPView
+        init(_ view: OTPView) {
             self.view = view
         }
     }

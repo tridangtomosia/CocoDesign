@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,41 +15,35 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VHm-Wb-F5V">
-                    <rect key="frame" x="10" y="10" width="355" height="80"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                     <subviews>
                         <textField opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uvA-2U-Qua">
-                            <rect key="frame" x="0.0" y="0.0" width="51" height="80"/>
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="0.0" y="0.0" width="54" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DU8-C6-oYz">
-                            <rect key="frame" x="61" y="0.0" width="50.5" height="80"/>
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="64" y="0.0" width="54.5" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltL-dk-qlQ">
-                            <rect key="frame" x="121.5" y="0.0" width="51" height="80"/>
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="128.5" y="0.0" width="54" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pZf-yP-wq4">
-                            <rect key="frame" x="182.5" y="0.0" width="51" height="80"/>
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="192.5" y="0.0" width="54" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OTu-Gr-vYx">
-                            <rect key="frame" x="243.5" y="0.0" width="50.5" height="80"/>
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="256.5" y="0.0" width="54.5" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C4Z-zt-tqN">
-                            <rect key="frame" x="304" y="0.0" width="51" height="80"/>
-                            <color key="backgroundColor" red="0.20392156859999999" green="0.67843137249999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="321" y="0.0" width="54" height="100"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
@@ -59,10 +53,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="VHm-Wb-F5V" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="Qpc-mb-0fx"/>
-                <constraint firstItem="VHm-Wb-F5V" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="YT6-aJ-GDM"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VHm-Wb-F5V" secondAttribute="trailing" constant="10" id="hRD-Fi-1zw"/>
-                <constraint firstAttribute="bottom" secondItem="VHm-Wb-F5V" secondAttribute="bottom" constant="10" id="zE0-mH-4p9"/>
+                <constraint firstItem="VHm-Wb-F5V" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Qpc-mb-0fx"/>
+                <constraint firstItem="VHm-Wb-F5V" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YT6-aJ-GDM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VHm-Wb-F5V" secondAttribute="trailing" id="hRD-Fi-1zw"/>
+                <constraint firstAttribute="bottom" secondItem="VHm-Wb-F5V" secondAttribute="bottom" id="zE0-mH-4p9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

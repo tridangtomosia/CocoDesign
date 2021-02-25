@@ -61,7 +61,7 @@ struct LinkColoredText: View {
 }
 
 struct LinkedText: View {
-    @EnvironmentObject var policy: PolicyModel
+    @EnvironmentObject var policy: PolicyObseverble
     let text: String
     let links: [NSTextCheckingResult]
     let linkName: String
@@ -86,7 +86,7 @@ struct LinkedText: View {
 }
 
 private struct LinkTapOverlay: UIViewRepresentable {
-    @EnvironmentObject var policy: PolicyModel
+    @EnvironmentObject var policy: PolicyObseverble
     let text: String
     let links: [NSTextCheckingResult]
 

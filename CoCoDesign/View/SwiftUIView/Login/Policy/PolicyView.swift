@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PolicyView: View {
     @ObservedObject var webViewStateModel: WebViewStateModel
-    @EnvironmentObject var policy: PolicyModel
+    @EnvironmentObject var policy: PolicyObseverble
     
     var body: some View {
         LoadingView(isShowing: .constant(webViewStateModel.loading)) {

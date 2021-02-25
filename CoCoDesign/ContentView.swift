@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var policy: PolicyModel
+    @EnvironmentObject var policy: PolicyObseverble
     @State var name = ""
 
     var body: some View {
@@ -23,6 +23,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(PolicyObseverble())
     }
 }

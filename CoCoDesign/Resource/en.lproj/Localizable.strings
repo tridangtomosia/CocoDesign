@@ -24,6 +24,7 @@
 "RETURN" ="Return";
 "AGREE" = "Agree";
 "SEARCH" = "Search";
+"RESENDOTP" = "Resend Code";
 
 //App Text
 "Place" = "Place";

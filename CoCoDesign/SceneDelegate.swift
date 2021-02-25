@@ -9,8 +9,9 @@ import UIKit
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    static var shared = SceneDelegate()
     var window: UIWindow?
-    var policy = PolicyModel()
+    var policy = PolicyObseverble()
     var phoneViewModel = PhoneViewModel()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

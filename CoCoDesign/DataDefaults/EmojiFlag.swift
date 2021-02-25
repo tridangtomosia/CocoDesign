@@ -2016,7 +2016,7 @@ let areaCodes: [RegionFlag] = {
     return areaCodes
 }()
 
-struct RegionFlag {
+struct RegionFlag: Hashable {
     var regionName: String
     var emoji: String
     var dialCode: String
