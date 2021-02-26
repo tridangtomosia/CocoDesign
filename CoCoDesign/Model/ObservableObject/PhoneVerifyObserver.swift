@@ -8,10 +8,10 @@
 import Combine
 import SwiftUI
 
-class PhoneInputObserver: ObservableObject {
+class PhoneVerifyObserver: ObservableObject {
     var objectWillChange = ObservableObjectPublisher()
     var stateCount = 0
-    var isReadyToPush = false
+    var isCompleted = false
     
     var phoneRequest: String {
         var string = phoneNumber
@@ -28,12 +28,13 @@ class PhoneInputObserver: ObservableObject {
                 if $0 != "-" {
                     phone.append($0)
                 } else {
-                    phone.append(" ")
+                    phone.append("")
                 }
             })
         }
         return phone
     }
+    
     var phone: String {
         var string = phoneNumber
         var phone = ""
@@ -67,9 +68,9 @@ class PhoneInputObserver: ObservableObject {
 
         didSet {
             if phoneNumber.count >= 11 {
-                isReadyToPush = true
+                isCompleted = true
             } else {
-                isReadyToPush = false
+                isCompleted = false
             }
             
             if phoneNumber.count > 12 {

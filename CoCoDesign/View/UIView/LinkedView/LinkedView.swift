@@ -167,11 +167,15 @@ private struct LinkTapOverlay: UIViewRepresentable {
 
 private class LinkTapOverlayView: UIView {
     var textContainer: NSTextContainer!
-
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-
         var newSize = bounds.size
+        newSize.width += 50
         newSize.height += 20 // need some extra space here to actually get the last line
         textContainer.size = newSize
     }

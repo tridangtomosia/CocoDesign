@@ -6,83 +6,98 @@
 //
 
 import SwiftUI
-
-private struct Configuration {
-    static let codeOPTLabel = "Mã xác thực OTP"
-    static let inputCodeOTPLabel = "Nhập mã OTP vừa được gửi đến số điện thoai:"
-    static let timeInputOTP = "Thời hạn OTP: "
-    static let timeLimit = 0
-}
+import Combine
 
 struct VerifiCode: View {
-//    @ObservedObject var verificodeViewModel: VerificodeViewModel
-    @ObservedObject var stateLogin = StateLogin()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var dialCode: String
-    @State var verifiCode: String = ""
-    @State var verifiCodeId: String = ""
-    @State var timeRemaining = Configuration.timeLimit
-    @State var sucsessVerificode = false
-    var phone = PhoneInputObserver()
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var viewModel = ViewModel()
+    @State private var cancellables = Set<AnyCancellable>()
+    var dialCode = "+84"
+    @ObservedObject var phone: PhoneVerifyObserver
+    
     var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 20.scaleH)
-            inputView()
-                .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-            Spacer()
-                .frame(height: 16.scaleH)
-            cowndownView()
-            Spacer()
-            actionView()
-                .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-        }
-        .padding(.bottom, 12.scaleH)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Image("ic_back")
-            .resizable()
-            .frame(width: 10, height: 18, alignment: .center)
-            .padding(.all, 0)
-            .onTapGesture {
-                presentationMode.wrappedValue.dismiss()
+        LoadingIndicatorView(isShowing: $viewModel.isShowProgress) {
+            VStack {
+                Spacer()
+                    .frame(height: 20.scaleH)
+                inputView()
+                    .padding(EdgeInsets(top: 0,
+                                        leading: 24,
+                                        bottom: 0,
+                                        trailing: 24))
+                Spacer()
+                    .frame(height: 16.scaleH)
+                cowndownView()
+                Spacer()
+                actionView()
+                    .padding(EdgeInsets(top: 0,
+                                        leading: 24,
+                                        bottom: 0,
+                                        trailing: 24))
             }
-        )
-        .onAppear {
-            VerificodeViewModel(verificationID: $verifiCodeId, timeRemaining: $timeRemaining).sendPhone(phoneNumber: dialCode + phone.phoneRequest)
-        }
-        
+            .padding(.bottom, 12.scaleH)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Image("ic_back")
+                .resizable()
+                .frame(width: 10, height: 18, alignment: .center)
+                .padding(.all, 0)
+                .onTapGesture {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+            .onAppear {
+                if viewModel.isFirstBecome {
+                    VerificodeViewModel(verificationID: $viewModel.stateVerificode.id,
+                                        timeRemaining: $viewModel.timeRemaining,
+                                        phoneNumber: dialCode + phone.phoneRequest,
+                                        isShowProgress: $viewModel.isShowProgress).sendPhone()
+                    viewModel.isFirstBecome = false
+                }
+            }}
     }
 
-    func actionView() -> some View {
+    private func actionView() -> some View {
         return VStack {
-            NavigationLink(destination: Text(verifiCode), isActive: $stateLogin.successLogin) { EmptyView() }
+            NavigationLink(destination: RegisterProfile(phone: phone),
+                           isActive: $viewModel.stateLogin.sucessNewLogin) {
+                EmptyView()
+            }
+            .hidden()
+            
+            NavigationLink(destination: Text("Old User"),
+                           isActive: $viewModel.stateLogin.sucessOldLogin) {
+                EmptyView()
+            }
+            .hidden()
+
             Button(Strings.Action.next) {
-                SignInAuthCredential().signIn(verifiCode, verificationID: verifiCodeId)
+                SignInAuthCredentialViewModel(cancellables: $cancellables,
+                                              stateLogin: $viewModel.stateLogin,
+                                              isShowLoading: $viewModel.isShowProgress,
+                                              stateVerificode: viewModel.stateVerificode,
+                                              phoneNumber: phone.phoneRequest).signIn()
             }
             .frame(minWidth: 0, maxWidth: .infinity)
             .frame(height: 48.scaleH)
             .foregroundColor(.white)
-            .background(sucsessVerificode ?
+            .background(viewModel.stateVerificode.sucess ?
                 Color.AppColor.appColor : Color.AppColor.textPlaceHolder)
             .clipShape(RoundedRectangle(cornerRadius: 48.scaleH))
-            .allowsHitTesting(sucsessVerificode)
-//            NavigationLink(
-//                destination: Text(verifiCode),
-//                label: {
-//                    Text(Strings.Action.next)
-//                        .frame(minWidth: 0, maxWidth: .infinity)
-//                        .frame(height: 48.scaleH)
-//                        .foregroundColor(.white)
-//                        .background(sucsessVerificode ?
-//                            Color.AppColor.appColor : Color.AppColor.textPlaceHolder)
-//                        .clipShape(RoundedRectangle(cornerRadius: 48.scaleH))
-//            }).allowsHitTesting(sucsessVerificode)
-
+            .allowsHitTesting(viewModel.stateVerificode.sucess)
+            .alert(isPresented: $viewModel.stateLogin.failLogin, content: {
+                Alert(title: Text("ERROR"), message: Text(viewModel.stateLogin.loginFail.localizedDescription), dismissButton: .cancel({
+                    viewModel.stateLogin.failLogin = false
+                }))
+                    
+            })
             Spacer()
                 .frame(height: 14.scaleH)
 
             Button(action: {
+                VerificodeViewModel(verificationID: $viewModel.stateVerificode.id,
+                                    timeRemaining: $viewModel.timeRemaining,
+                                    phoneNumber: dialCode + phone.phoneRequest,
+                                    isShowProgress: $viewModel.isShowProgress).sendPhone()
             }, label: {
                 Text(Strings.Action.ReSendOTP)
                     .foregroundColor(Color.AppColor.grayTextColor)
@@ -97,51 +112,61 @@ struct VerifiCode: View {
         }
     }
 
-    func inputView() -> some View {
+    private func inputView() -> some View {
         return VStack(alignment: .leading, spacing: nil, content: {
-            Text(Configuration.codeOPTLabel)
+            Text(Strings.AppText.VerificodeView.codeOPT)
                 .font(.appFont(interFont: .bold, size: 18))
             Spacer()
                 .frame(height: 10.scaleH)
-            Text(Configuration.inputCodeOTPLabel)
+            Text(Strings.AppText.VerificodeView.inputCodeOTP)
                 .foregroundColor(Color.AppColor.grayTextColor)
                 .font(.appFont(interFont: .semiBold, size: 12))
-            Text(dialCode + " " + phone.phoneNumber)
+            Text(dialCode + " " + phone.phone)
                 .foregroundColor(Color.AppColor.blackColor)
                 .font(.appFont(interFont: .semiBold, size: 12))
             Spacer()
                 .frame(height: 25.scaleH)
-            OTPView(verifiCode: $verifiCode, isInputFull: $sucsessVerificode)
+            OTPView(verifiCode: $viewModel.stateVerificode.code, isInputFull: $viewModel.stateVerificode.sucess)
                 .frame(height: 43.scaleH)
                 .padding(EdgeInsets(top: 0, leading: 9, bottom: 0, trailing: 9))
         })
     }
 
-    func cowndownView() -> some View {
+    private func cowndownView() -> some View {
         return HStack {
-            Text(Configuration.timeInputOTP)
+            Text(Strings.AppText.VerificodeView.timeOTP)
                 .font(.appFont(interFont: .semiBold, size: 11))
                 .foregroundColor(.black)
-            Text(timeFormater(second: timeRemaining))
+            Text(timeFormater(second: viewModel.timeRemaining))
                 .foregroundColor(.red)
                 .font(.appFont(interFont: .semiBold, size: 11))
-                .onReceive(timer) { _ in
-                    if self.timeRemaining > 0 {
-                        self.timeRemaining -= 1
+                .onReceive(viewModel.timer) { _ in
+                    if self.viewModel.timeRemaining > 0 {
+                        self.viewModel.timeRemaining -= 1
                     }
                 }
         }
     }
 
-    func timeFormater(second: Int) -> String {
+    private func timeFormater(second: Int) -> String {
         let sec = second % 60
         let minute = second / 60
         return "\(minute): \(sec)"
     }
+    
+    struct ViewModel {
+        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        var stateLogin = StateLogin()
+        var stateVerificode = StateVerificode()
+        var timeRemaining = 0
+        var isShowProgress = false
+        var isFirstBecome = true
+        var token = Token(token: "", accountStatus: "")
+    }
 }
 
-//struct VerifiCode_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VerifiCode(dialCode: "+84", phone: PhoneInputObserver())
-//    }
-//}
+struct VerifiCode_Previews: PreviewProvider {
+    static var previews: some View {
+        VerifiCode( phone: PhoneVerifyObserver())
+    }
+}

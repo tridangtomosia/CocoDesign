@@ -17,9 +17,10 @@ protocol RequestBuilder {
 
 extension RequestBuilder {
     func createURLRequest(url: URL, method: HTTPMethod, parameters: Parameters, timeout: TimeInterval = 40) -> URLRequest {
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: timeout)
+        var request = URLRequest(url: url, timeoutInterval: timeout)
         request.method = method
         request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         let parameterEncoding: ParameterEncoding = method == .get ? URLEncoding() : JSONEncoding()
         do {
             try request = parameterEncoding.encode(request, with: parameters)
@@ -63,7 +64,7 @@ struct APIResponseError: Codable {
 struct APIResponse<T: Codable>: Codable {
     let status: Bool?
     let data: T?
-    let error: APIResponseError?
+    let meta: APIResponseError?
 }
 
 enum APIResult<T> {

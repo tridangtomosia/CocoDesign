@@ -25,6 +25,7 @@
 "AGREE" = "Đồng Ý";
 "SEARCH" = "Tìm Kiếm";
 "RESENDOTP" = "Gửi lại mã OTP";
+"SAVE" = "Lưu";
 
 // AppText
 "Place" = "Place";

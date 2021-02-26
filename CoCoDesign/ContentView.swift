@@ -15,7 +15,8 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 PhoneInput()
-                NavigationLink(destination: PolicyView(webViewStateModel: WebViewStateModel()), isActive: $policy.isShowPolicy) {}
+                NavigationLink(destination: PolicyView(webViewStateModel: WebViewStateModel()),
+                               isActive: $policy.isShowPolicy) {}
             }
         }
     }

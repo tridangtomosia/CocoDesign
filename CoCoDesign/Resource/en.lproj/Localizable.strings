@@ -25,6 +25,7 @@
 "AGREE" = "Agree";
 "SEARCH" = "Search";
 "RESENDOTP" = "Resend Code";
+"SAVE" = "Save";
 
 //App Text
 "Place" = "Place";

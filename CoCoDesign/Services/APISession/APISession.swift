@@ -65,7 +65,8 @@ struct APISession: APIService {
                     if response.status == .success {
                         logging(response: response, request: builder.urlRequest, data: data)
                         return Just(data)
-                            .decode(type: T.self, decoder: decoder).print()
+                            .decode(type: T.self, decoder: decoder)
+                            .print()
                             .mapError { _ in .decodingError }
                             .eraseToAnyPublisher()
                     } else if let statusCode = HTTPStatusCode(rawValue: response.statusCode) {

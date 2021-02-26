@@ -40,5 +40,6 @@ extension Color {
         static let grayTextColor = Color(hex: "#9FA5C0")
         static let blueLinkColor = Color(hex: "#005CF5")
         static let blackColor = Color(hex: "#2E3E5C")
+        static let grayBoldColor = Color(hex: "#D2D2D2")
     }
 }

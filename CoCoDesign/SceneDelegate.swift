@@ -12,10 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static var shared = SceneDelegate()
     var window: UIWindow?
     var policy = PolicyObseverble()
-    var phoneViewModel = PhoneViewModel()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let contentView = ContentView().environmentObject(policy).environmentObject(phoneViewModel)
+        let contentView = ContentView().environmentObject(policy)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)

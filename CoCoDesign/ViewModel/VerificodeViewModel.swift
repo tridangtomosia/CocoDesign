@@ -13,12 +13,19 @@ import UIKit
 struct VerificodeViewModel {
     @Binding var verificationID : String
     @Binding var timeRemaining : Int
+    @State var phoneNumber = ""
+    @Binding var isShowProgress: Bool
     
-    func sendPhone(phoneNumber: String) {
+    func sendPhone() {
+        isShowProgress = true
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
-            if error != nil { return }
+            if error != nil {
+                self.isShowProgress = false
+                return
+            }
             self.verificationID = verificationID ?? ""
             self.timeRemaining = 90
+            self.isShowProgress = false
         }
     }
 }
