@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static var shared = SceneDelegate()
     var window: UIWindow?
     var policy = PolicyObseverble()
+    var token = Token(token: "", accountStatus: .new)
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let contentView = ContentView().environmentObject(policy)
