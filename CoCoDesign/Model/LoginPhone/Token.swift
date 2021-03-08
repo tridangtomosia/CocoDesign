@@ -9,7 +9,7 @@ import Foundation
 
 struct Token: Codable, CustomStringConvertible {
     var token: String
-    var accountStatus: String
+    var accountStatus: acountStatus
     
     var description: String {
         return """
@@ -17,6 +17,11 @@ struct Token: Codable, CustomStringConvertible {
         account_status: \(String(describing: accountStatus))
         """
     }
+}
+
+enum acountStatus: String, Codable {
+    case new = "NEW"
+    case old = "OLD"
 }
 
 struct Response: Codable {

@@ -41,5 +41,7 @@ extension Color {
         static let blueLinkColor = Color(hex: "#005CF5")
         static let blackColor = Color(hex: "#2E3E5C")
         static let grayBoldColor = Color(hex: "#D2D2D2")
+        static let shadowColor = Color(hex: "#000000").opacity(0.18)
+        static let backgroundColor = Color(hex: "#F4F5F7")
     }
 }

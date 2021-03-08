@@ -201,6 +201,18 @@ extension String {
         }
         return number
     }
+    
+    func phoneDefaultNumber() -> String {
+        var number = self.replacingOccurrences(of: " ", with: "")
+        var phone = ""
+        if number.count < 10 {
+            phone = "0" + number
+            return phone
+        } else {
+            number.removeFirst()
+            return number.phoneDefaultNumber()
+        }
+    }
 }
 
 extension String {

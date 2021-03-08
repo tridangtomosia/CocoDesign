@@ -11,7 +11,6 @@ import Foundation
 
 protocol RequestBuilder {
     var urlRequest: URLRequest { get }
-
     func createURLRequest(url: URL, method: HTTPMethod, parameters: Parameters, timeout: TimeInterval) -> URLRequest
 }
 
@@ -19,6 +18,10 @@ extension RequestBuilder {
     func createURLRequest(url: URL, method: HTTPMethod, parameters: Parameters, timeout: TimeInterval = 40) -> URLRequest {
         var request = URLRequest(url: url, timeoutInterval: timeout)
         request.method = method
+        let token = SceneDelegate.shared.token.token
+        if !token.isEmpty {
+            request.headers["Authorization"] = "Bearer" + token
+        }
         request.addValue("application/json;charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         let parameterEncoding: ParameterEncoding = method == .get ? URLEncoding() : JSONEncoding()

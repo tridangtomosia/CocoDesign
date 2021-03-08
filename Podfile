@@ -6,7 +6,8 @@ target 'CoCoDesign' do
   use_frameworks!
 
   # Pods for CoCoDesign
-
+     #URLImage
+  pod 'URLImage'
      #Service
   pod 'ReachabilitySwift'
     #Network

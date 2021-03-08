@@ -10,17 +10,17 @@ import SwiftUI
 
 struct CategoriesBuilder: RequestBuilder {
     var urlRequest: URLRequest {
-        return createURLRequest(url: APIURLRequest.phone.url, method: .post, parameters: [:])
+        return createURLRequest(url: APIURLRequest.categories.url, method: .get, parameters: [:])
     }
 }
 
 protocol APIRequestCategoriesService {
     var apiSession: APIService { get }
-    func getCategories() -> AnyPublisher<APIResponse<[Categorie]>, APIError>
+    func getCategories() -> AnyPublisher<APIResponse<[Category]>, APIError>
 }
 
 extension APIRequestCategoriesService {
-    func getCategories() -> AnyPublisher<APIResponse<[Categorie]>, APIError> {
+    func getCategories() -> AnyPublisher<APIResponse<[Category]>, APIError> {
         apiSession.request(with: CategoriesBuilder(), decoder: nil)
     }
 }

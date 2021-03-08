@@ -364,6 +364,25 @@ PODS:
   - PromisesObjC (1.2.11)
   - Protobuf (3.14.0)
   - ReachabilitySwift (5.0.0)
+  - URLImage (2.2.3):
+    - URLImage/Common (= 2.2.3)
+    - URLImage/DownloadManager (= 2.2.3)
+    - URLImage/FileIndex (= 2.2.3)
+    - URLImage/ImageDecoder (= 2.2.3)
+    - URLImage/Log (= 2.2.3)
+    - URLImage/PlainDatabase (= 2.2.3)
+    - URLImage/RemoteContentView (= 2.2.3)
+  - URLImage/Common (2.2.3)
+  - URLImage/DownloadManager (2.2.3):
+    - URLImage/Log
+  - URLImage/FileIndex (2.2.3):
+    - URLImage/Common
+    - URLImage/Log
+    - URLImage/PlainDatabase
+  - URLImage/ImageDecoder (2.2.3)
+  - URLImage/Log (2.2.3)
+  - URLImage/PlainDatabase (2.2.3)
+  - URLImage/RemoteContentView (2.2.3)
 
 DEPENDENCIES:
   - Alamofire (= 5.2.1)
@@ -377,6 +396,7 @@ DEPENDENCIES:
   - FirebaseFirestoreSwift
   - FirebaseMessaging
   - ReachabilitySwift
+  - URLImage
 
 SPEC REPOS:
   trunk:
@@ -407,6 +427,7 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - ReachabilitySwift
+    - URLImage
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -436,7 +457,8 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Protobuf: 0cde852566359049847168e51bd1c690e0f70056
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  URLImage: 1eeb43e09cd736008da21944ba51d433ef41c09d
 
-PODFILE CHECKSUM: 00b35795b409a1018e4dadd7624959ef4bb0bf28
+PODFILE CHECKSUM: 4f96122b44662491c13da7da7a1b1a487174dca9
 
 COCOAPODS: 1.9.0
