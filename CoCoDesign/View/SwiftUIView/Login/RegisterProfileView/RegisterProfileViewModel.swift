@@ -9,9 +9,10 @@ class RegisterProfileViewModel: ObservableObject, APIUpdateUserProfileService {
 
     var apiSession: APIService = APISession()
     var phoneNumber: String = ""
+    
 
     init(_ phoneNumber: String = "") {
-        self.phoneNumber = phoneNumber
+        self.phoneNumber = phoneNumber.phoneDefaultNumber()
         $action
             .sink(receiveValue: { action in
                 switch action {
@@ -19,6 +20,8 @@ class RegisterProfileViewModel: ObservableObject, APIUpdateUserProfileService {
                     break
                 case .register:
                     self.register()
+                case .pushView:
+                    self.state.isPushView = true
                 }
             })
             .store(in: &disposbag)
@@ -47,11 +50,13 @@ extension RegisterProfileViewModel {
     struct State {
         var isShowIndicator: Bool = false
         var isCompletedUpdate: Bool = false
+        var isPushView: Bool = false
         var error: Error = APIError.unknown("")
     }
 
     enum Action {
         case become
         case register
+        case pushView
     }
 }

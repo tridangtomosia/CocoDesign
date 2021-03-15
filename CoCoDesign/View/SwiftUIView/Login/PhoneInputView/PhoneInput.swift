@@ -8,39 +8,48 @@
 import SwiftUI
 
 struct PhoneInputView: View {
+    @EnvironmentObject var policy: PolicyObseverble
     @ObservedObject var viewModel: PhoneInputViewModel
 
     var body: some View {
-        LoadingIndicatorView(isShowing: $viewModel.state.isShowIndicator) {
+        
+        ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
             VStack {
                 inputView
                     .padding(.all, 24)
                 actionView
+                NavigationLink(destination: PolicyView(webViewStateModel: WebViewStateModel()),
+                               isActive: $policy.isShowPolicy) {}
             }
             .padding(.bottom, 12.scaleH)
-            .sheet(isPresented: $viewModel.state.isShowPlace, content: {
-                placeSheetView
-            })
+            .sheet(isPresented: $viewModel.state.isShowPlace,
+                   content: { placeSheetView }
+            )
+            .alert(isPresented: $viewModel.state.isFail) {
+                Alert(title: Text(Strings.Title.error),
+                      message: Text(viewModel.state.error.localizedDescription),
+                      dismissButton: .cancel ({ self.viewModel.state.isFail = false })
+                )
+            }
         }
     }
 
     var actionView: some View {
         return VStack(alignment: .leading, spacing: 12.scaleH, content: {
             if viewModel.state.isSucces {
-                NavigationLink(destination: VerifiCodeView(viewModel: VerifiCodeViewModel(viewModel.phoneRequest, viewModel.state.verificodeId)),
+                let verifiCodeModel = VerifiCodeViewModel(viewModel.phoneRequest,
+                                                          viewModel.state.verificodeId)
+                NavigationLink(destination: VerifiCodeView(viewModel: verifiCodeModel),
                                isActive: $viewModel.state.isSucces) {
                     EmptyView()
                 }
                 .hidden()
-                .alert(isPresented: $viewModel.state.isFail) {
-                    Alert(title: Text(viewModel.state.error.localizedDescription))
-                }
             }
-
-            LinkedText(Strings.PhoneInputView.textPolicy,
-                       linkName: Strings.PhoneInputView.linkOpenPolicy,
-                       font: .appFont(interFont: .regular, size: 13))
+            
+            Spacer()
+            LinkedView()
                 .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 14))
+                .frame(height: 50)
 
             Button(action: {
                 viewModel.action = .requestPhoneTofireBase
@@ -149,10 +158,14 @@ struct PhoneInputView: View {
                     .font(.appFont(interFont: .bold, size: 13))
                     .foregroundColor(Color.AppColor.blackColor)
             }
+            
             Spacer()
+            
             TextField(Strings.Action.search, text: $viewModel.regionSearchName)
                 .frame(width: 150, alignment: .center)
+            
             Spacer()
+            
             Button(action: {
                 viewModel.action = .showPlace(false)
             }, label: {

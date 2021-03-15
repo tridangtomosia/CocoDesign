@@ -10,7 +10,6 @@ import SwiftUI
 
 class HomeCategoriesViewModel: ObservableObject {
     @Published var action: Action = .become
-    @Published var categories: [Category] = []
     @Published var state = State()
     var apiSession: APIService = APISession()
     private var disposbag = Set<AnyCancellable>()
@@ -47,7 +46,7 @@ class HomeCategoriesViewModel: ObservableObject {
             } receiveValue: { response in
                 self.state.isRequested = true
                 guard let categories = response.data else { return }
-                self.categories = categories
+                self.state.categories = categories
             }
             .store(in: &disposbag)
     }
@@ -62,6 +61,7 @@ extension HomeCategoriesViewModel: APIRequestCategoriesService {
         var categoryId: Int = 0
         var isFail: Bool = false
         var isSucces: Bool = false
+        var categories: [Category] = []
     }
 
     enum Action {

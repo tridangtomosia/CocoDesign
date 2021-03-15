@@ -13,7 +13,7 @@ class PhoneInputViewModel: ObservableObject {
     
     var phoneRequest: String {
         var phoneRequest = phoneInputNumber
-        if phoneRequest.count > 11 {
+        if phoneRequest.count > 9 {
             phoneRequest.removeFirst()
         }
         return state.regionFlag.dialCode + phoneRequest
@@ -73,7 +73,8 @@ class PhoneInputViewModel: ObservableObject {
                 self.state.error = error
                 self.state.isFail = true
             case .finished:
-                break
+                self.state.error = APIError.unknown("")
+                self.state.isFail = false
             }
             self.state.isShowIndicator = false
         } receiveValue: { id in

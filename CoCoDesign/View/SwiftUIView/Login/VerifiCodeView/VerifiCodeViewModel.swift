@@ -30,77 +30,46 @@ extension VerifiCodeViewModel {
         // update view
         var isShowIndicator: Bool = false
         var isCanAction: Bool = false
-        var timeRemaining: String = ""
         var error: Error = APIError.unknown("")
+        var isPushView: Bool = false
     }
 
     enum Action {
         case become
-        case login
+        case login(_ codeInput: String)
         case resendCode
+        case startCountDown
     }
 }
 
 class VerifiCodeViewModel: ObservableObject {
-    // action
-    @Published var isStartCowndown: Bool = false
     @Published var action: Action = .become
-    @Published var inputCode: String = ""
-
     @Published var state = State()
 
     var phoneNumber: String
     var apiSession: APIService = APISession()
-    private var timeState: Int = 0
+
     private var verificationID: String
     private var disposbag = Set<AnyCancellable>()
-    private var timer: Timer?
-
+    
     init(_ phoneNumber: String, _ verificationID: String) {
         self.phoneNumber = phoneNumber
         self.verificationID = verificationID
-
-        $isStartCowndown
-            .map { $0 == true }
-            .eraseToAnyPublisher()
-            .sink { isSucces in
-                if isSucces {
-                    self.timeState = 90
-                    self.cowndownStart()
-                    self.isStartCowndown = false
-                }
-            }
-            .store(in: &disposbag)
 
         $action
             .sink { action in
                 switch action {
                 case .become:
                     break
-                case .login:
-                    self.signIn()
+                case let .login(code):
+                    self.signIn(code)
                 case .resendCode:
                     self.requestPhoneToFirebase()
+                case .startCountDown:
+                    break
                 }
             }
             .store(in: &disposbag)
-
-        $inputCode
-            .dropFirst()
-            .sink { code in
-                // setting here if want auto login before succes input code
-            }
-            .store(in: &disposbag)
-    }
-
-    func cowndownStart() {
-        state.timeRemaining = timeFormater(seconds: timeState)
-        if timeState > 0 {
-            timer = Timer.schedule(delay: 1) { _ in
-                self.timeState -= 1
-                self.cowndownStart()
-            }
-        }
     }
 
     func timeFormater(seconds: Int) -> String {
@@ -109,17 +78,16 @@ class VerifiCodeViewModel: ObservableObject {
         return "\(minute): \(sec)"
     }
 
-    func signIn() {
+    func signIn(_ code: String) {
         state.isShowIndicator = true
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID,
-                                                                 verificationCode: inputCode)
+                                                                 verificationCode: code)
         Auth.auth().signIn(with: credential) { _, error in
             self.state.isShowIndicator = false
             if let error = error {
                 self.state.error = error
                 self.state.isFail = true
             } else {
-                self.stopTimer()
                 self.request(self.phoneNumber)
             }
         }
@@ -148,7 +116,6 @@ class VerifiCodeViewModel: ObservableObject {
                 case .old:
                     self.state.isOldUser = true
                 }
-                
             }
             .store(in: &disposbag)
     }
@@ -178,13 +145,7 @@ class VerifiCodeViewModel: ObservableObject {
         } receiveValue: { id in
             self.state.isSuccesReceiveCode = true
             self.verificationID = id
-            self.isStartCowndown = true
         }
         .store(in: &disposbag)
-    }
-    
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 }

@@ -10,50 +10,46 @@ import SwiftUI
 
 struct RegisterProfileView: View {
     @ObservedObject var viewModel: RegisterProfileViewModel
-    
+
     init(_ viewModel: RegisterProfileViewModel) {
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.appFont(interFont: .bold, size: 16)]
         self.viewModel = viewModel
     }
 
     var body: some View {
-        VStack {
-            LoadingIndicatorView(isShowing: $viewModel.state.isShowIndicator) {
-                VStack(alignment: .leading, spacing: 10, content: {
-                    Spacer()
-                        .frame(height: 65)
-                    inputView()
+        LoadingIndicatorView(isShowing: $viewModel.state.isShowIndicator) {
+            VStack(alignment: .leading, spacing: 10, content: {
+                NavigationLink(destination: HomeCategoriesView(HomeCategoriesViewModel()), isActive: $viewModel.state.isPushView) {
+                    EmptyView()
+                }
+                .hidden()
+                NavigationBarCustomeView(isRightHidden: false,
+                                         isLineBottomHidden: false,
+                                         rightAction: {
+                                             viewModel.action = .pushView
+                                         },
+                                         barView: Text(Strings.BarTitle.registerView))
+                Spacer()
+                    .frame(height: 65)
+                inputView
 
-                    Spacer()
-                        .frame(height: 6)
-                    phoneView()
+                Spacer()
+                    .frame(height: 6)
+                phoneView
 
-                    Spacer()
-                        .frame(height: 48)
+                Spacer()
+                    .frame(height: 48)
 
-                    actionView()
+                actionView
 
-                    Spacer()
+                Spacer()
 
-                })
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
-            }
-            .navigationBarTitle(Strings.BarTitle.registerView,
-                                displayMode: .inline)
-            .navigationBarItems(trailing:
-                NavigationLink(
-                    destination: HomeCategoriesView(HomeCategoriesViewModel()),
-                    label: {
-                        Text(Strings.Action.skip)
-                            .font(.appFont(interFont: .semiBold, size: 13))
-                            .foregroundColor(Color.AppColor.blackColor)
-                })
-            )
+            })
+                .padding(.leading, 24)
+                .padding(.trailing, 24)
         }
     }
 
-    func inputView() -> some View {
+    var inputView: some View {
         return VStack(alignment: .leading, spacing: nil, content: {
             Text(Strings.RegisterProfileView.fullName)
                 .font(.appFont(interFont: .bold, size: 13))
@@ -73,7 +69,7 @@ struct RegisterProfileView: View {
         })
     }
 
-    func phoneView() -> some View {
+    var phoneView: some View {
         return VStack(alignment: .leading, spacing: nil, content: {
             Text(Strings.RegisterProfileView.phoneNumber)
                 .font(.appFont(interFont: .bold, size: 13))
@@ -97,7 +93,7 @@ struct RegisterProfileView: View {
         })
     }
 
-    func actionView() -> some View {
+    var actionView: some View {
         return VStack(alignment: .leading, spacing: nil, content: {
             NavigationLink(destination: HomeCategoriesView(HomeCategoriesViewModel()),
                            isActive: $viewModel.state.isCompletedUpdate) {
@@ -121,8 +117,8 @@ struct RegisterProfileView: View {
     }
 }
 
-//struct RegisterProfileView_Previews: PreviewProvider {
+// struct RegisterProfileView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        RegisterProfileView(viewModel: RegisterProfileViewModel(""))
 //    }
-//}
+// }

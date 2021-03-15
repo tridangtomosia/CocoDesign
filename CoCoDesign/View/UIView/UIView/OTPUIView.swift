@@ -9,13 +9,13 @@ import SwiftUI
 import UIKit
 class OTPUIView: UIView {
     @IBOutlet var inputOTPTextFiels: [UITextField]!
-    var codeInputCompleted: ((String)->())?
+    var codeInputCompleted: ((String) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         inputOTPTextFiels.forEach { textField in
             textField.layer.borderWidth = 1
-            textField.layer.cornerRadius = textField.bounds.height/10
+            textField.layer.cornerRadius = textField.bounds.height / 10
             textField.clipsToBounds = true
             textField.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
             textField.delegate = self
@@ -53,12 +53,12 @@ extension OTPUIView: UITextFieldDelegate {
             return false
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.endEditing(true)
+        endEditing(true)
         return true
     }
-    
+
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textField.layer.borderColor = Color.AppColor.appColor.cgColor
         return true
@@ -82,36 +82,36 @@ extension OTPUIView: UITextFieldDelegate {
             break
         }
     }
-    
+
     func textFieldDidChangeSelection(_ textField: UITextField) {
         checkStateCompleted()
     }
-    
+
     func checkStateCompleted() {
         var codeInput = ""
-        for i in 10...15 {
+        for i in 10 ... 15 {
             if let character = (viewWithTag(i) as? UITextField)?.text {
                 codeInput.append(character)
             }
         }
         codeInputCompleted?(codeInput)
+        if codeInput.count == 6 {
+            endEditing(true)
+        }
     }
 }
 
 struct OTPView: UIViewRepresentable {
     @Binding var verifiCode: String
-    @Binding var isInputFull: Bool
     func makeUIView(context: Context) -> some OTPUIView {
         let view = Bundle.main.loadNibNamed("OTPUIView", owner: nil, options: nil)?[0] as! OTPUIView
         view.codeInputCompleted = { code in
             verifiCode = code
-            isInputFull = verifiCode.count == 6
         }
         return view
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        
     }
 
     func makeCoordinator() -> OPTCoordinator {

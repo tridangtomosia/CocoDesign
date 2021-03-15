@@ -7,15 +7,13 @@
 
 import Foundation
 
-struct Token: Codable, CustomStringConvertible {
+struct Token: Codable {
     var token: String
     var accountStatus: acountStatus
     
-    var description: String {
-        return """
-        token: \(String(describing: token))
-        account_status: \(String(describing: accountStatus))
-        """
+    enum CodingKey: String, Codable {
+        case token = "token"
+        case accountStatus = "account_status"
     }
 }
 

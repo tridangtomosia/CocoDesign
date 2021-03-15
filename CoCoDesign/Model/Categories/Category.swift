@@ -20,16 +20,6 @@ struct Category: Codable {
         case mediaId = "media_id"
         case imgUrl = "img_url"
     }
-//    var description: String {
-//        return """
-//        id: \(String(describing: id))
-//        name: \(String(describing: name))
-//        media_id: \(String(describing: mediaId))
-//        status: \(String(describing: status))
-//        img_url: \(String(describing: imgUrl))
-//        order: \(String(describing: order))
-//        """
-//    }
 }
 
 enum CategoryStatus: String, Codable {

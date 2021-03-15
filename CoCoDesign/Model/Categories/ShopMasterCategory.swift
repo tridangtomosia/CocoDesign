@@ -15,35 +15,24 @@ struct ShopMasterCategory: Codable {
     var descript: String?
     var status: String?
     var imgUrl: String?
+    var isSelected: Bool? = false
     var banners: [Banner]?
-//    var isSelected: Bool? = false
     
-    var description: String {
-        return """
-        id: \(String(describing: id))
-        name: \(String(describing: name))
-        address: \(String(describing: address))
-        working_time: \(String(describing: workingTime))
-        description: \(String(describing: descript))
-        status: \(String(describing: status))
-        img_url: \(String(describing: imgUrl))
-        banners: \(String(describing: banners))
-        """
+    enum CodingKey: String, Codable {
+        case id, name, address, description, status, banners
+        case workingTime = "working_time"
+        case imgUrl = "img_url"
     }
 }
 
-struct Banner: Codable {
+struct Banner: Codable, Hashable {
     var id: Int
     var order: Int
     var status: String
     var imgUrl: String
     
-    var description: String {
-        return """
-        id: \(String(describing: id))
-        order: \(String(describing: order))
-        status: \(String(describing: status))
-        img_url: \(String(describing: imgUrl))
-        """
+    enum CodingKey: String, Codable {
+        case id, order, status
+        case imgUrl = "img_url"
     }
 }

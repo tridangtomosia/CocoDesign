@@ -9,35 +9,19 @@ import SwiftUI
 import URLImage
 
 struct ImageView: View {
-    init(withURL url: String) {
+    init(withURL url: String, isPresentFullScreen: Bool = false) {
         self.url = url
+        self.isPresentFullScreen = isPresentFullScreen
     }
     var url: String
+    var isPresentFullScreen: Bool
 
     var body: some View {
-//        LoadingView(isShowing: $isShowLoading) {
-//            VStack {
-//                Image(uiImage: image)
-//                    .resizable()
-//                    .frame(width: 200, height: 200, alignment: .leading)
-//                    .scaledToFill()
-//                    .aspectRatio(contentMode: .fill)
-//            }
-//            .onAppear(perform: {
-//                if let url = URL(string: "https://i.ibb.co/68BbdVm/Screenshot-2021-02-03-at-16-00-05.png"),
-//                    let imageData = try? Data(contentsOf: url),
-//                    let uiImage = UIImage(data: imageData) {
-//                    image = uiImage
-//                    isShowLoading = false
-//                }
-//            })
-//        }
-//        "https://i.ibb.co/68BbdVm/Screenshot-2021-02-03-at-16-00-05.png"
         URLImage(url: URL(string: url)!) {
             Text("nothing here")
         } inProgress: { progress -> Text in
             if let progress = progress {
-                return Text("\(progress/100)+ % Loading...")
+                return Text("\(progress/100) %")
             } else {
                 return Text("Loading...")
             }
@@ -49,7 +33,9 @@ struct ImageView: View {
         } content: { image in // Content view
             image
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .aspectRatio(contentMode: isPresentFullScreen ? .fit : .fill)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                .padding(.all, 0)
         }
     }
 }

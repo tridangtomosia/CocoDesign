@@ -41,7 +41,15 @@ extension Color {
         static let blueLinkColor = Color(hex: "#005CF5")
         static let blackColor = Color(hex: "#2E3E5C")
         static let grayBoldColor = Color(hex: "#D2D2D2")
-        static let shadowColor = Color(hex: "#000000").opacity(0.18)
+        static let shadowColor = Color(hex: "#000000").opacity(0.16)
         static let backgroundColor = Color(hex: "#F4F5F7")
+    }
+    
+    struct AnimationColor {
+        static let circleTrackStart: Color = Color(red: 237, green: 242, blue: 255)
+        static let circleTrackEnd: Color = Color(red: 235, green: 248, blue: 255)
+        
+        static let circleRoundStart: Color = Color(red: 71, green: 198, blue: 255)
+        static let circleRoundEnd: Color = Color(red: 90, green: 131, blue: 255)
     }
 }

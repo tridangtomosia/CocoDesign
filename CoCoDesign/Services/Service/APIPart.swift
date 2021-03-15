@@ -38,9 +38,14 @@ class APIPath {
 
     enum Version: String {
         case v1
+        case policy = "privacy-policy"
 
         var path: String {
             return APIPath.endpoint / "api" / rawValue
+        }
+        
+        var link: String {
+            return APIPath.endpoint / rawValue
         }
     }
 

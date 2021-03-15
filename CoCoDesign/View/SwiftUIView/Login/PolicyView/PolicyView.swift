@@ -10,17 +10,18 @@ import SwiftUI
 struct PolicyView: View {
     @ObservedObject var webViewStateModel: WebViewStateModel
     @EnvironmentObject var policy: PolicyObseverble
-    
+
     var body: some View {
-        LoadingView(isShowing: .constant(webViewStateModel.loading)) {
+        LoadingView(isShowing: $webViewStateModel.loading) {
             // Add onNavigationAction if callback needed
             WebView(url: policy.links!, webViewStateModel: self.webViewStateModel) // add
         }
         .navigationBarTitle(Text(webViewStateModel.pageTitle), displayMode: .inline)
-        .navigationBarItems(trailing:
-            Button("Last Page") {
-                self.webViewStateModel.goBack.toggle()
-            }.disabled(!webViewStateModel.canGoBack)
-        )
+//        .navigationBarItems(trailing:
+//            Button("Last Page") {
+//                self.webViewStateModel.goBack.toggle()
+//            }
+//            .disabled(!webViewStateModel.canGoBack)
+//        )
     }
 }
