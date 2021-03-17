@@ -11,14 +11,15 @@ import SwiftUI
 struct LoadingIndicatorView<Content>: View where Content: View {
     @Binding var isShowing: Bool
     var content: () -> Content
-
+    let backgroundColor: LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.4), Color.purple.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottom)
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
+                backgroundColor
+                    .edgesIgnoringSafeArea(.all)
                 self.content()
                     .disabled(self.isShowing)
                     .blur(radius: self.isShowing ? 3 : 0)
-
                 VStack {
                     ActivityIndicator(isAnimating: .constant(true), style: .large)
                 }
@@ -30,6 +31,7 @@ struct LoadingIndicatorView<Content>: View where Content: View {
                 .opacity(self.isShowing ? 1 : 0)
             }
         }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
@@ -43,9 +45,9 @@ struct ActivityIndicatorLoadingView<Content>: View where Content: View {
                     .disabled(self.isShowing)
                     .blur(radius: self.isShowing ? 3 : 0)
                 CircleLoader()
-                .frame(width: geometry.size.width / 2,
-                       height: geometry.size.height / 5)
-                .opacity(self.isShowing ? 1 : 0)
+                    .frame(width: geometry.size.width / 2,
+                           height: geometry.size.height / 5)
+                    .opacity(self.isShowing ? 1 : 0)
             }
         }
     }

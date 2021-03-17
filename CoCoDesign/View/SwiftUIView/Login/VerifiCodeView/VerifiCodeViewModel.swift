@@ -32,6 +32,7 @@ extension VerifiCodeViewModel {
         var isCanAction: Bool = false
         var error: Error = APIError.unknown("")
         var isPushView: Bool = false
+        var timeRemaining: Int = 90
     }
 
     enum Action {
@@ -55,7 +56,6 @@ class VerifiCodeViewModel: ObservableObject {
     init(_ phoneNumber: String, _ verificationID: String) {
         self.phoneNumber = phoneNumber
         self.verificationID = verificationID
-
         $action
             .sink { action in
                 switch action {
@@ -133,6 +133,7 @@ class VerifiCodeViewModel: ObservableObject {
                     promise(.success(verificationID ?? ""))
                 }
         }
+        .receive(on: DispatchQueue.main)
         .sink { results in
             switch results {
             case let .failure(error):

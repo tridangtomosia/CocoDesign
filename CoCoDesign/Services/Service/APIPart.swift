@@ -66,7 +66,7 @@ class APIPath {
     }
 
     struct Shop {
-        static var shop: String { Version.v1.path / "shop" }
+        static var shopDetail: String { Version.v1.path / "shop" }
     }
 }
 
@@ -75,6 +75,7 @@ enum APIURLRequest {
     case login
     case categories
     case masterCategories(Int)
+    case shopDetail(Int)
     
     var url: URL {
         switch self {
@@ -83,6 +84,7 @@ enum APIURLRequest {
                 break
             }
             return url
+            
         case .login:
             guard let url = URL(string: APIPath.Login.login) else {
                 break
@@ -94,8 +96,14 @@ enum APIURLRequest {
                 break
             }
             return url
+            
         case let .masterCategories(id):
             guard let url = URL(string: APIPath.MasterCategories.MasterCategories / "\(id)" / "shops") else {
+                break
+            }
+            return url
+        case let .shopDetail(id):
+            guard let url = URL(string: APIPath.Shop.shopDetail / "\(id)") else {
                 break
             }
             return url

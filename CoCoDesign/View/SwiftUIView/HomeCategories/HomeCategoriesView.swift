@@ -17,23 +17,25 @@ struct HomeCategoriesView: View {
     }
 
     var body: some View {
-        VStack {
-            NavigationBarCustomeView(isLineBottomHidden: false,
-                                     barView: Text(Strings.BarTitle.categoryView))
-                .background(Color.white)
+        ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
+            VStack {
+                NavigationBarCustomeView(isLineBottomHidden: false,
+                                         barView: Text(Strings.BarTitle.categoryView))
+                    .background(Color.white)
 
-            Spacer()
-                .frame(height: 20)
+                Spacer()
+                    .frame(height: 20)
 
-            categoryCollectionView
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .alert(isPresented: $viewModel.state.isFail) {
-                    Alert(title: Text(viewModel.state.error.localizedDescription))
-                }
-            Spacer()
+                categoryCollectionView
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .alert(isPresented: $viewModel.state.isFail) {
+                        Alert(title: Text(viewModel.state.error.localizedDescription))
+                    }
+                Spacer()
+            }
+            .background(Color.AppColor.backgroundColor)
+            .navigationBarHidden(true)
         }
-        .background(Color.AppColor.backgroundColor)
-        .navigationBarHidden(true)
     }
 
     var categoryCollectionView: some View {
@@ -68,7 +70,7 @@ struct HomeCategoriesView: View {
             VStack(alignment: .center, spacing: 5, content: {
                 ZStack {
                     if let url = category.imgUrl {
-                        ImageView(withURL: url)
+                        LoadImageView(withURL: url)
                             .padding(.all, 16)
                     } else {
                         ActivityIndicator(isAnimating: .constant(true), style: .medium)

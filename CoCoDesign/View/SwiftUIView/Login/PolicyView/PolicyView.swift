@@ -12,7 +12,7 @@ struct PolicyView: View {
     @EnvironmentObject var policy: PolicyObseverble
 
     var body: some View {
-        LoadingView(isShowing: $webViewStateModel.loading) {
+        ActivityIndicatorLoadingView(isShowing: $webViewStateModel.loading) {
             // Add onNavigationAction if callback needed
             WebView(url: policy.links!, webViewStateModel: self.webViewStateModel) // add
         }

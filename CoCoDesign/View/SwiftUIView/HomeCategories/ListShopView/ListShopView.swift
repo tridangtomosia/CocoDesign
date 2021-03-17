@@ -6,7 +6,7 @@ struct ListShopView: View {
     @ObservedObject var viewModel: ListShopViewModel
 
     var body: some View {
-        LoadingIndicatorView(isShowing: $viewModel.state.isShowIndicator) {
+        ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
             VStack(alignment: .leading, spacing: nil, content: {
                 NavigationBarCustomeView(isLeftHidden: false,
                                          isLineBottomHidden: false,
@@ -32,7 +32,7 @@ struct ListShopView: View {
         var body: some View {
             HStack {
                 if let url = shop.imgUrl {
-                    ImageView(withURL: url)
+                    LoadImageView(withURL: url)
                         .frame(width: 50, height: 50)
                         .clipped()
                         .padding(.all, 8)
@@ -59,7 +59,7 @@ struct ListShopView: View {
         return ScrollView {
             if viewModel.state.listShop.count != 0 {
                 ForEach(0 ..< viewModel.state.listShop.count, id: \.self) { element in
-                    NavigationLink(destination: ShopDetailView(viewModel: ShopDetailViewModel($viewModel.state.listShop[element]))) {
+                    NavigationLink(destination: ShopDetailView(ShopDetailViewModel($viewModel.state.listShop[element]))) {
                         ShopCell(shop: viewModel.state.listShop[element])
                             .padding(.all, 8)
                     }

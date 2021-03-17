@@ -14,9 +14,9 @@ struct VerifiCodeView: View {
 
     @State private var inputCode = ""
     @State private var timeRemaining = 90
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
-        LoadingIndicatorView(isShowing: $viewModel.state.isShowIndicator) {
+        ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
             VStack {
                 NavigationBarCustomeView(isLeftHidden: false, leftAction: {
                     presentationMode.wrappedValue.dismiss()
@@ -82,6 +82,7 @@ struct VerifiCodeView: View {
                           message: Text(viewModel.state.error.localizedDescription),
                           dismissButton: .cancel({
                               viewModel.state.isFail = false
+                              inputCode = ""
                     }))
                 })
 

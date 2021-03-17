@@ -12,67 +12,76 @@ struct ShopDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var viewModel: ShopDetailViewModel
 
+    init(_ viewModel: ShopDetailViewModel) {
+        self.viewModel = viewModel
+        self.viewModel.action = .request
+    }
+
+    @State var selectedTab = 0
+
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                VStack(alignment: .leading, spacing: nil, content: {
-                    VStack(alignment: .center, spacing: nil, content: {
-                        pageView
-                            .frame(width: geometry.size.width,
-                                   height: geometry.size.height * 1 / 3.2,
-                                   alignment: .topLeading)
-                            .clipped()
-                            .overlay(
-                                backButton
-                                    .frame(width: geometry.size.width,
-                                           height: geometry.size.height * 1 / 3.2,
-                                           alignment: .topLeading)
-                            )
-                            .overlay(
-                                pageNumberView
-                                    .frame(width: geometry.size.width,
-                                           height: geometry.size.height * 1 / 3.2,
-                                           alignment: .bottomTrailing)
-                            )
-                            .overlay(
-                                avatarView
-                                    .frame(width: geometry.size.width,
-                                           height: geometry.size.height * 1 / 3.2 + 60,
-                                           alignment: .bottom)
-                            )
+        ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
+            GeometryReader { geometry in
+                ZStack {
+                    VStack(alignment: .leading, spacing: nil, content: {
+                        VStack(alignment: .center, spacing: nil, content: {
+                            pageView
+                                .frame(width: geometry.size.width,
+                                       height: geometry.size.height * 1 / 3.2,
+                                       alignment: .topLeading)
+                                .clipped()
+                                .overlay(
+                                    backButton
+                                        .frame(width: geometry.size.width,
+                                               height: geometry.size.height * 1 / 3.2,
+                                               alignment: .topLeading)
+                                )
+                                .overlay(
+                                    pageNumberView
+                                        .frame(width: geometry.size.width,
+                                               height: geometry.size.height * 1 / 3.2,
+                                               alignment: .bottomTrailing)
+                                )
+                                .overlay(
+                                    avatarView
+                                        .frame(width: geometry.size.width,
+                                               height: geometry.size.height * 1 / 3.2 + 60,
+                                               alignment: .bottomLeading)
+                                )
+                            Spacer()
+                                .frame(height: 50)
+                            Text(viewModel.state.category.name ?? "")
+                                .font(.appFont(interFont: .bold, size: 16))
+                                .foregroundColor(Color.AppColor.blackColor)
+                            Rectangle()
+                                .foregroundColor(Color.AppColor.grayBorderColor)
+                                .frame(height: 1)
+                        })
+                        infomationView
                         Spacer()
-                            .frame(height: 50)
-                        Text(viewModel.shopMasterCategory.name ?? "")
-                            .font(.appFont(interFont: .bold, size: 16))
-                            .foregroundColor(Color.AppColor.blackColor)
-                        Rectangle()
-                            .foregroundColor(Color.AppColor.grayBorderColor)
-                            .frame(height: 1)
                     })
-                    infomationView
-                    Spacer()
-                })
-                    .fullScreenCover(isPresented: $viewModel.state.isShowFullSizeImage) {
-                        pageView
-                            .frame(width: geometry.size.width,
-                                   height: geometry.size.height,
-                                   alignment: .center)
-                            .overlay(
-                                backButton
-                                    .frame(width: geometry.size.width,
-                                           height: geometry.size.height,
-                                           alignment: .topLeading)
-                            )
-                    }
-                    .overlay(
-                        selectedShopButton
-                            .frame(width: geometry.size.width - 48,
-                                   height: geometry.size.height - 24,
-                                   alignment: .bottomTrailing)
-                    )
+                        .overlay(
+                            selectedShopButton
+                                .frame(width: geometry.size.width - 48,
+                                       height: geometry.size.height - 24,
+                                       alignment: .bottomTrailing)
+                        )
+//                        .fullScreenCover(isPresented: $viewModel.state.isShowFullSizeImage) {
+//                            pageView
+//                                .frame(width: geometry.size.width,
+//                                       height: geometry.size.height,
+//                                       alignment: .center)
+//                                .overlay(
+//                                    backButton
+//                                        .frame(width: geometry.size.width,
+//                                               height: geometry.size.height,
+//                                               alignment: .topLeading)
+//                                )
+//                        }
+                }
             }
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
 
     var selectedShopButton: some View {
@@ -90,7 +99,7 @@ struct ShopDetailView: View {
                     .shadow(color: Color.AppColor.shadowColor, radius: 10, x: 1, y: 1)
             )
             .onTapGesture {
-                viewModel.shopMasterCategory.isSelected = true
+                viewModel.state.category.isSelected = true
                 presentationMode.wrappedValue.dismiss()
             }
         }
@@ -98,10 +107,14 @@ struct ShopDetailView: View {
 
     var avatarView: some View {
         VStack {
-            if let urlString = viewModel.shopMasterCategory.imgUrl {
-                ImageView(withURL: urlString)
+            if let urlString = viewModel.state.category.imgUrl {
+                LoadImageView(withURL: urlString)
                     .frame(width: 60, height: 60)
                     .clipShape(Circle())
+                    .background(
+                        RoundedRectangle(cornerRadius: 60)
+                            .fill(Color.white)
+                    )
             } else {
                 Text("No Image")
             }
@@ -110,7 +123,7 @@ struct ShopDetailView: View {
 
     var pageNumberView: some View {
         VStack {
-            Text(viewModel.shopMasterCategory.banners == nil ? "1/1" : "\(viewModel.state.selectionTab + 1)/\(viewModel.shopMasterCategory.banners?.count ?? 0)")
+            Text(viewModel.state.category.banners == nil ? "1/1" : "\(viewModel.state.selectedTab + 1)/\(viewModel.state.category.banners?.count ?? 0)")
                 .frame(width: 48, height: 20)
                 .foregroundColor(Color.AppColor.blackColor)
                 .font(.appFont(interFont: .semiBold, size: 11))
@@ -125,11 +138,13 @@ struct ShopDetailView: View {
     var backButton: some View {
         ZStack {
             Button {
-                if viewModel.state.isShowFullSizeImage {
-                    viewModel.state.isShowFullSizeImage.toggle()
-                } else {
+//                print(viewModel.state.isShowFullSizeImage)
+//                if viewModel.state.isShowFullSizeImage {
+//                    viewModel.state.isShowFullSizeImage = false
+//                } else {
                     presentationMode.wrappedValue.dismiss()
-                }
+//                    viewModel.state.isShowFullSizeImage = false
+//                }
             } label: {
                 Image("ic_back_white")
                     .resizable()
@@ -153,7 +168,7 @@ struct ShopDetailView: View {
                 Image("ic_place")
                     .resizable()
                     .frame(width: 20, height: 20)
-                Text(viewModel.shopMasterCategory.address ?? "")
+                Text(viewModel.state.category.address ?? "")
                     .font(.appFont(interFont: .regular, size: 12))
                     .foregroundColor(Color.AppColor.blackColor)
             }
@@ -166,7 +181,7 @@ struct ShopDetailView: View {
                 Text(Strings.ShopDetailView.timeOpenShop)
                     .font(.appFont(interFont: .regular, size: 12))
                     .foregroundColor(Color.AppColor.appColor)
-                Text(viewModel.shopMasterCategory.workingTime ?? "")
+                Text(viewModel.state.category.workingTime ?? "")
                     .font(.appFont(interFont: .regular, size: 12))
                     .foregroundColor(Color.AppColor.blackColor)
             }
@@ -176,7 +191,7 @@ struct ShopDetailView: View {
                 Image("ic_note")
                     .resizable()
                     .frame(width: 20, height: 20)
-                Text(viewModel.shopMasterCategory.descript ?? "")
+                Text(viewModel.state.category.descript ?? "")
                     .font(.appFont(interFont: .regular, size: 12))
                     .foregroundColor(Color.AppColor.blackColor)
             }
@@ -185,8 +200,7 @@ struct ShopDetailView: View {
     }
 
     func itemPageView(_ urlString: String, _ isPresentFullScren: Bool = false) -> some View {
-        return ImageView(withURL: urlString,
-                         isPresentFullScreen: viewModel.state.isShowFullSizeImage)
+        return LoadImageView(withURL: urlString)
             .frame(minWidth: 0,
                    maxWidth: .infinity,
                    minHeight: 0,
@@ -197,26 +211,19 @@ struct ShopDetailView: View {
 
     var pageView: some View {
         return
-            TabView(selection: $viewModel.state.selectionTab,
+            TabView(selection: $viewModel.state.selectedTab,
                     content: {
-                        if let data = viewModel.shopMasterCategory.banners, data.count != 0 {
-                            ForEach(data, id: \.imgUrl) { element in
-                                itemPageView(element.imgUrl, viewModel.state.isShowFullSizeImage)
-                                    .tabItem { EmptyView() }
-                                    .tag(element)
-                                    .onTapGesture {
-                                        self.viewModel.state.isShowFullSizeImage = true
-                                    }
-                            }
-                        } else {
-                            if let url = viewModel.shopMasterCategory.imgUrl {
-                                itemPageView(url, viewModel.state.isShowFullSizeImage)
-                                    .onTapGesture {
-                                        self.viewModel.state.isShowFullSizeImage = true
-                                    }
+                        if let data = viewModel.state.category.banners, data.count != 0, let images = data.filter { $0.imgUrl.count != 0 }, images.count != 0 {
+                            ForEach(0 ..< images.count, id: \.self) { element in
+                                if let url = images[element].imgUrl {
+                                    itemPageView(url)
+                                        .tabItem { EmptyView() }
+                                        .tag(element)
+                                }
                             }
                         }
-            })
+                    }
+            )
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
 }

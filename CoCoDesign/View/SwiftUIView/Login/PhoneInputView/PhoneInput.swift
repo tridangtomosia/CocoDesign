@@ -12,24 +12,25 @@ struct PhoneInputView: View {
     @ObservedObject var viewModel: PhoneInputViewModel
 
     var body: some View {
-        
         ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
-            VStack {
-                inputView
-                    .padding(.all, 24)
-                actionView
-                NavigationLink(destination: PolicyView(webViewStateModel: WebViewStateModel()),
-                               isActive: $policy.isShowPolicy) {}
-            }
-            .padding(.bottom, 12.scaleH)
-            .sheet(isPresented: $viewModel.state.isShowPlace,
-                   content: { placeSheetView }
-            )
-            .alert(isPresented: $viewModel.state.isFail) {
-                Alert(title: Text(Strings.Title.error),
-                      message: Text(viewModel.state.error.localizedDescription),
-                      dismissButton: .cancel ({ self.viewModel.state.isFail = false })
+            NavigationView {
+                VStack {
+                    inputView
+                        .padding(.all, 24)
+                    actionView
+                    NavigationLink(destination: PolicyView(webViewStateModel: WebViewStateModel()),
+                                   isActive: $policy.isShowPolicy) {}
+                }
+                .padding(.bottom, 12.scaleH)
+                .sheet(isPresented: $viewModel.state.isShowPlace,
+                       content: { placeSheetView }
                 )
+                .alert(isPresented: $viewModel.state.isFail) {
+                    Alert(title: Text(Strings.Title.error),
+                          message: Text(viewModel.state.error.localizedDescription),
+                          dismissButton: .cancel({ self.viewModel.state.isFail = false })
+                    )
+                }
             }
         }
     }
@@ -37,15 +38,15 @@ struct PhoneInputView: View {
     var actionView: some View {
         return VStack(alignment: .leading, spacing: 12.scaleH, content: {
             if viewModel.state.isSucces {
-                let verifiCodeModel = VerifiCodeViewModel(viewModel.phoneRequest,
-                                                          viewModel.state.verificodeId)
-                NavigationLink(destination: VerifiCodeView(viewModel: verifiCodeModel),
-                               isActive: $viewModel.state.isSucces) {
-                    EmptyView()
-                }
-                .hidden()
+                NavigationLink(
+                    destination: VerifiCodeView(
+                        viewModel: VerifiCodeViewModel(viewModel.phoneRequest,
+                                                       viewModel.state.verificodeId)
+                    ),
+                    isActive: $viewModel.state.isSucces
+                ) { EmptyView() }
+                    .hidden()
             }
-            
             Spacer()
             LinkedView()
                 .padding(EdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 14))
@@ -108,7 +109,7 @@ struct PhoneInputView: View {
                                value: $viewModel.phoneInputNumber,
                                formatter: CurrencyTextFieldFormatter(limit: 12))
                 .font(.appFont(interFont: .bold, size: 13))
-                .padding(.leading, 10)
+                .padding(.all, 10)
                 .foregroundColor(Color.AppColor.blackColor)
                 .keyboardType(.phonePad)
         }
@@ -158,14 +159,14 @@ struct PhoneInputView: View {
                     .font(.appFont(interFont: .bold, size: 13))
                     .foregroundColor(Color.AppColor.blackColor)
             }
-            
+
             Spacer()
-            
+
             TextField(Strings.Action.search, text: $viewModel.regionSearchName)
                 .frame(width: 150, alignment: .center)
-            
+
             Spacer()
-            
+
             Button(action: {
                 viewModel.action = .showPlace(false)
             }, label: {

@@ -31,11 +31,9 @@ extension OTPUIView: UITextFieldDelegate {
         if string == "" {
             if textField.tag > 10 {
                 (viewWithTag(textField.tag - 1) as? UITextField)?.becomeFirstResponder()
-                (viewWithTag(textField.tag - 1) as? UITextField)?.layer.borderColor = Color.AppColor.appColor.cgColor
             }
-            textField.text = ""
-            textField.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
             checkStateCompleted()
+            textField.text = ""
             return false
         }
 
@@ -46,6 +44,7 @@ extension OTPUIView: UITextFieldDelegate {
                 textField.text = string
                 nextCursorTextField(textField: textField)
             }
+            checkStateCompleted()
             return false
         } else {
             textField.text = string
@@ -60,12 +59,18 @@ extension OTPUIView: UITextFieldDelegate {
     }
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        clearEditting()
         textField.layer.borderColor = Color.AppColor.appColor.cgColor
         return true
     }
+    
+    func clearEditting() {
+        for i in 10 ... 15 {
+            viewWithTag(i)?.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
+        }
+    }
 
     func nextCursorTextField(textField: UITextField) {
-        textField.layer.borderColor = Color.AppColor.grayBorderColor.cgColor
         switch textField.tag {
         case 10:
             inputOTPTextFiels[1].becomeFirstResponder()
@@ -78,7 +83,6 @@ extension OTPUIView: UITextFieldDelegate {
         case 14:
             inputOTPTextFiels[5].becomeFirstResponder()
         default:
-            textField.layer.borderColor = Color.AppColor.appColor.cgColor
             break
         }
     }
@@ -97,12 +101,14 @@ extension OTPUIView: UITextFieldDelegate {
         codeInputCompleted?(codeInput)
         if codeInput.count == 6 {
             endEditing(true)
+            clearEditting()
         }
     }
 }
 
 struct OTPView: UIViewRepresentable {
     @Binding var verifiCode: String
+    
     func makeUIView(context: Context) -> some OTPUIView {
         let view = Bundle.main.loadNibNamed("OTPUIView", owner: nil, options: nil)?[0] as! OTPUIView
         view.codeInputCompleted = { code in
@@ -118,7 +124,7 @@ struct OTPView: UIViewRepresentable {
         return OPTCoordinator(self)
     }
 
-    class OPTCoordinator: NSObject, UITextFieldDelegate {
+    class OPTCoordinator: NSObject {
         var view: OTPView
         init(_ view: OTPView) {
             self.view = view

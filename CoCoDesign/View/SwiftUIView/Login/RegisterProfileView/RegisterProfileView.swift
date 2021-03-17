@@ -16,7 +16,7 @@ struct RegisterProfileView: View {
     }
 
     var body: some View {
-        LoadingIndicatorView(isShowing: $viewModel.state.isShowIndicator) {
+        ActivityIndicatorLoadingView(isShowing: $viewModel.state.isShowIndicator) {
             VStack(alignment: .leading, spacing: 10, content: {
                 NavigationLink(destination: HomeCategoriesView(HomeCategoriesViewModel()), isActive: $viewModel.state.isPushView) {
                     EmptyView()

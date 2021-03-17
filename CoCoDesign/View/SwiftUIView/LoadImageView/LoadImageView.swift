@@ -8,7 +8,7 @@
 import SwiftUI
 import URLImage
 
-struct ImageView: View {
+struct LoadImageView: View {
     init(withURL url: String, isPresentFullScreen: Bool = false) {
         self.url = url
         self.isPresentFullScreen = isPresentFullScreen
@@ -40,8 +40,8 @@ struct ImageView: View {
     }
 }
 
-struct ImageView_Previews: PreviewProvider {
+struct LoadImageView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageView(withURL: "")
+        LoadImageView(withURL: "")
     }
 }
